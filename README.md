@@ -1,6 +1,6 @@
-# MPO 5C — jednoduchá verzia
+# MPO 5C
 
-Python 3.10+, bez inštalácie ďalších knižníc. Rozbaľte archív a otvorte priečinok `mpo_simple` v PyCharme. Pôvodný Google Docs nebol zmenený.
+Python 3.10+, bez inštalácie ďalších knižníc. Rozbaľte archív a otvorte priečinok `mpo_simple` v PyCharme.
 
 ## Spustenie
 
@@ -16,7 +16,7 @@ python parser.py
 python test.py
 ```
 
-V PyCharme stačí otvoriť príslušný súbor a stlačiť Run. Ak potrebujete iba jeden algoritmus, spustite `main_greedy.py` alebo `main_custom.py`. Na Linuxe/macOS sa príkaz môže volať `python3`, vo Windows je dostupný aj `py`.
+Ak potrebujete iba jeden algoritmus, spustite `main_greedy.py` alebo `main_custom.py`. Na Linuxe/macOS sa príkaz môže volať `python3`, vo Windows je dostupný aj `py`.
 
 ## Čo obsahuje priečinok
 
@@ -31,8 +31,6 @@ V PyCharme stačí otvoriť príslušný súbor a stlačiť Run. Ak potrebujete 
 | `stores.csv` | Modelové poradie blízkosti obchodov a náklady na ich návštevu |
 | `result_greedy.json` | Posledný výsledok greedy |
 | `result_custom.json` | Posledný výsledok custom |
-
-Ďalšie pracovné priečinky, generátor databázy ani samostatné súbory `model.py`/`baseline.py` nie sú potrebné. Dva JSON súbory sa pri spustení prepíšu; nové súbory výsledkov nepribúdajú. JSON netreba čítať: plán, dôvody rozhodnutí a sumy sú viditeľné v konzole. Python môže automaticky vytvoriť pomocný priečinok `__pycache__`; nejde o dáta projektu.
 
 ## Ako nakupuje greedy
 
@@ -51,7 +49,7 @@ Ceny produktov neporovnáva. V našich dátach má Fresh všetko potrebné, pret
 
 Ak na káve ušetríme 2 € a na dvoch baleniach mlieka ďalšie 1 €, celková úspora je 3 €. Pri dodatočných nákladoch na cestu 2 € zostáva výhoda 1 €. Jednotlivé nákupy by cestu nemuseli zaplatiť, preto sa ich úspory sčítajú. Práve tento prípad overuje `test.py`.
 
-V dodanej konfigurácii stojí návšteva Lidla a Kauflandu **spolu 2 €**, Fresh stojí 0 € a Tesco pridáva 4 €. Presun z Lidla do Kauflandu preto nepridáva náklady na dopravu. Ak sa majú platiť samostatne, zadajte im rozdielne `travel_zone` v `stores.csv`:
+V dodanej konfigurácii stojí návšteva Lidla a Kauflandu **spolu 2 €**, Fresh stojí 0 € a Tesco pridáva 4 €. Presun z Lidla do Kauflandu preto nepridáva náklady na dopravu.
 
 ```csv
 Lidl,2,lidl,200
@@ -77,7 +75,6 @@ Ide o žravé lokálne zlepšovanie podľa čistej úspory s viacerými počiato
 
 ## Dáta a pravidlá
 
-- Zdroj cien: [tabuľka zo Zadania 2](https://docs.google.com/document/d/1LSuWJjTs4z0TorBknQc0_Tzr4SbxwWkwd2tZlubYXMU), prečítaná 22. 11. 2026. Ide o dáta dokumentu, nie o nové aktuálne ceny obchodov.
 - V `products.csv` jeden riadok predstavuje jednu kategóriu v jednom obchode. Pre jednoduchosť je podporovaná jedna ponuka takejto dvojice. Ceny sú v celých centoch, množstvá v gramoch, mililitroch alebo kusoch.
 - Pri cenách za kg sú prijaté modelové balenia: ryža a kuracie filé — 1000 g, paradajky — 500 g. Pol kilogramu paradajok v Lidli/Kauflande je zaokrúhlený na 120/130 centov. Veľkosti sú predpoklady, nie potvrdené balenia. Označuje ich pole `note`.
 - Prázdne `stock_packages` znamená dostatočnú modelovú zásobu; `0` znamená nedostupný produkt. Záporné a neceločíselné počty balení sú zakázané. Prebytok kvôli veľkosti balenia je povolený.
@@ -85,9 +82,3 @@ Ide o žravé lokálne zlepšovanie podľa čistej úspory s viacerými počiato
 - `deposit_cents` je samostatný záloh za každé balenie; aktuálne je 0, pretože pôvodná tabuľka zálohy neurčuje. Vrátenie zálohu sa nemodeluje.
 - Rozpočet, otváracie hodiny a maximálny počet obchodov v tejto jednoduchej verzii nie sú obmedzené.
 - Kandidát je slovník `{offer_id: počet_balení}`. Neuvedené ponuky majú počet 0. `evaluate()` iba overuje a počíta; algoritmy plán vytvárajú a menia. Neprípustný plán dostane `score_cents = null`; nízka cena neúplného zoznamu sa nepovažuje za úspech.
-
-Po zmene cien sa môžu očakávané sumy v teste `test_actual_results` oprávnene zmeniť: treba ich prepočítať a aktualizovať. Väčšina ostatných testov používa malé nezávislé príklady.
-
-Po zavedení viacerých štartov je jedno očakávanie zastarané: `test_custom_can_stop_before_global_optimum` očakáva 2000 centov, nová verzia však nájde lepší plán za 1900 centov. Tento test zatiaľ zlyhá, ostatných 11 prechádza; súbor `test.py` nebol upravený.
-
-Dve porovnávané metódy sú implementované. Na finálnu požiadavku „baseline + dva prístupy“ bude neskôr potrebný ešte jeden prístup. Tretí algoritmus zatiaľ nebol pridaný.
