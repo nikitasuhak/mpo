@@ -5,6 +5,7 @@ import unittest
 from parser import evaluate, load_data, package_count, purchase_cost, travel_cost
 from main_greedy import greedy
 from main_custom import custom
+from main_exact import exact
 
 
 def example(trip_cost=200):
@@ -29,7 +30,7 @@ def example(trip_cost=200):
 class Tests(unittest.TestCase):
     def test_actual_results(self):
         data = load_data()
-        for algorithm, expected in ((greedy, 5431), (custom, 4221)):
+        for algorithm, expected in ((greedy, 5431), (custom, 4221), (exact, 4221)):
             plan, _ = algorithm(data)
             result = evaluate(data, plan)
             self.assertTrue(result["feasible"])
@@ -82,7 +83,7 @@ class Tests(unittest.TestCase):
         for product in data["products"]:
             if product["category_id"] == "coffee":
                 product["stock_packages"] = 0
-        for algorithm in (greedy, custom):
+        for algorithm in (greedy, custom, exact):
             result = evaluate(data, algorithm(data)[0])
             self.assertFalse(result["feasible"])
             self.assertTrue(any("coffee" in error for error in result["errors"]))
@@ -99,6 +100,10 @@ class Tests(unittest.TestCase):
         self.assertEqual(plan["coffee_Kaufland"], 1)
         self.assertEqual(plan["coffee_Lidl"], 1)
         self.assertTrue(any("greedy" in step for step in steps))
+        exact_plan, _ = exact(data)
+        self.assertTrue(evaluate(data, exact_plan)["feasible"])
+        self.assertEqual(exact_plan["coffee_Kaufland"], 1)
+        self.assertEqual(exact_plan["coffee_Lidl"], 1)
 
     def test_discount_and_deposit(self):
         product = example()["products"][0]
@@ -109,7 +114,7 @@ class Tests(unittest.TestCase):
 
     def test_determinism(self):
         data = load_data()
-        for algorithm in (greedy, custom):
+        for algorithm in (greedy, custom, exact):
             self.assertEqual(algorithm(data), algorithm(data))
 
     def test_custom_can_stop_before_global_optimum(self):
@@ -128,7 +133,23 @@ class Tests(unittest.TestCase):
                                          "stock_packages": None, "buy_n": None, "pay_m": None})
         plan, _ = custom(data)
         self.assertEqual(evaluate(data, plan)["total_cents"], 2000)
-        self.assertEqual(evaluate(data, {"xB": 1, "yC": 1})["total_cents"], 1900)
+        exact_plan, _ = exact(data)
+        self.assertEqual(exact_plan, {"xB": 1, "yC": 1})
+        self.assertEqual(evaluate(data, exact_plan)["score_cents"], 1900)
+
+    def test_exact_can_buy_an_extra_pack_for_a_discount(self):
+        data = example()
+        data["shopping"] = {"coffee": {"required_quantity": 500, "unit": "g"}}
+        product = data["products"][0]
+        data["products"] = [product]
+        product.update(price_cents=100, buy_n=3, pay_m=1, deposit_cents=10)
+        plan, _ = exact(data)
+        self.assertEqual(plan, {"coffee_Kaufland": 3})
+        self.assertEqual(evaluate(data, plan)["score_cents"], 130)
+        product["stock_packages"] = 2
+        plan, _ = exact(data)
+        self.assertEqual(plan, {"coffee_Kaufland": 2})
+        self.assertEqual(evaluate(data, plan)["score_cents"], 220)
 
 
 if __name__ == "__main__":

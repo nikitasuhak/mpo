@@ -1,6 +1,6 @@
-"""Čítanie CSV, spoločné pravidlá a porovnanie dvoch metód.
+"""Čítanie CSV, spoločné pravidlá a porovnanie troch metód.
 
-Spustenie tohto súboru vykoná obe metódy. Pri importe iba sprístupní funkcie.
+Spustenie tohto súboru vykoná všetky tri metódy. Pri importe iba sprístupní funkcie.
 Peniaze: celé centy. Množstvá: gramy, mililitre alebo kusy podľa kategórie.
 """
 
@@ -169,19 +169,20 @@ def show_and_save(data, method, plan, steps, directory=ROOT):
 if __name__ == "__main__":
     from main_greedy import greedy
     from main_custom import custom
+    from main_exact import exact
 
     data = load_data()
-    rows = []
-    for name, algorithm in (("greedy", greedy), ("custom", custom)):
+    rows = {}
+    for name, algorithm in (("greedy", greedy), ("custom", custom), ("exact", exact)):
         plan, steps = algorithm(data)
-        result = show_and_save(data, name, plan, steps)
-        rows.append((name, result))
+        rows[name] = show_and_save(data, name, plan, steps)
     print("\n=== POROVNANIE ===")
-    for name, result in rows:
+    for name, result in rows.items():
         if result["feasible"]:
             print(f"{name}: {result['total_cents']/100:.2f} €")
         else:
             print(f"{name}: neprípustný plán; cenu neporovnávame ako úspech")
-    if all(result["feasible"] for _, result in rows):
-        saving = rows[0][1]["total_cents"] - rows[1][1]["total_cents"]
-        print(f"Rozdiel greedy − custom: {saving/100:.2f} €")
+    for baseline, method in (("greedy", "custom"), ("greedy", "exact"), ("custom", "exact")):
+        first, second = rows[baseline]["score_cents"], rows[method]["score_cents"]
+        if first is not None and second is not None:
+            print(f"Rozdiel {baseline} − {method}: {(first - second) / 100:.2f} €")
