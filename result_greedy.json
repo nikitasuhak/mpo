@@ -1,0 +1,239 @@
+{
+  "method": "greedy",
+  "plan": {
+    "rice_fresh": 2,
+    "milk_fresh": 3,
+    "coffee_fresh": 1,
+    "pasta_fresh": 4,
+    "buckwheat_fresh": 4,
+    "chicken_fresh": 2,
+    "tomatoes_fresh": 2,
+    "eggs_fresh": 1,
+    "chocolate_fresh": 2,
+    "cheese_fresh": 2,
+    "bread_fresh": 1,
+    "cola_fresh": 1
+  },
+  "steps": [
+    "Vyberám Fresh: najbližší zostávajúci obchod podľa proximity_rank.",
+    "V Fresh kupujem dostupné celé balenia na pokrytie chýbajúcich potrieb.",
+    "Zoznam je pokrytý. Ďalšie obchody nenavštevujem."
+  ],
+  "feasible": true,
+  "errors": [],
+  "score_cents": 5431,
+  "products_cents": 5431,
+  "travel_cents": 0,
+  "total_cents": 5431,
+  "visited_stores": [
+    "Fresh"
+  ],
+  "coverage": [
+    {
+      "product": "rice",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "milk",
+      "needed": 3000,
+      "bought": 3000,
+      "surplus": 0,
+      "unit": "ml"
+    },
+    {
+      "product": "coffee",
+      "needed": 250,
+      "bought": 500,
+      "surplus": 250,
+      "unit": "g"
+    },
+    {
+      "product": "pasta",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "buckwheat",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "chicken",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "tomatoes",
+      "needed": 500,
+      "bought": 500,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "eggs",
+      "needed": 30,
+      "bought": 30,
+      "surplus": 0,
+      "unit": "ks"
+    },
+    {
+      "product": "chocolate",
+      "needed": 200,
+      "bought": 200,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "cheese",
+      "needed": 300,
+      "bought": 500,
+      "surplus": 200,
+      "unit": "g"
+    },
+    {
+      "product": "bread",
+      "needed": 500,
+      "bought": 500,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "cola",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "ml"
+    }
+  ],
+  "purchases": [
+    {
+      "offer_id": "rice_fresh",
+      "product": "rice",
+      "store": "Fresh",
+      "packages": 2,
+      "package_size": 1000,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 310
+    },
+    {
+      "offer_id": "milk_fresh",
+      "product": "milk",
+      "store": "Fresh",
+      "packages": 3,
+      "package_size": 1000,
+      "quantity": 3000,
+      "unit": "ml",
+      "cost_cents": 267
+    },
+    {
+      "offer_id": "coffee_fresh",
+      "product": "coffee",
+      "store": "Fresh",
+      "packages": 1,
+      "package_size": 500,
+      "quantity": 500,
+      "unit": "g",
+      "cost_cents": 799
+    },
+    {
+      "offer_id": "pasta_fresh",
+      "product": "pasta",
+      "store": "Fresh",
+      "packages": 4,
+      "package_size": 500,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 356
+    },
+    {
+      "offer_id": "buckwheat_fresh",
+      "product": "buckwheat",
+      "store": "Fresh",
+      "packages": 4,
+      "package_size": 500,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 636
+    },
+    {
+      "offer_id": "chicken_fresh",
+      "product": "chicken",
+      "store": "Fresh",
+      "packages": 2,
+      "package_size": 1000,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 1090
+    },
+    {
+      "offer_id": "tomatoes_fresh",
+      "product": "tomatoes",
+      "store": "Fresh",
+      "packages": 2,
+      "package_size": 250,
+      "quantity": 500,
+      "unit": "g",
+      "cost_cents": 450
+    },
+    {
+      "offer_id": "eggs_fresh",
+      "product": "eggs",
+      "store": "Fresh",
+      "packages": 1,
+      "package_size": 30,
+      "quantity": 30,
+      "unit": "ks",
+      "cost_cents": 639
+    },
+    {
+      "offer_id": "chocolate_fresh",
+      "product": "chocolate",
+      "store": "Fresh",
+      "packages": 2,
+      "package_size": 100,
+      "quantity": 200,
+      "unit": "g",
+      "cost_cents": 218
+    },
+    {
+      "offer_id": "cheese_fresh",
+      "product": "cheese",
+      "store": "Fresh",
+      "packages": 2,
+      "package_size": 250,
+      "quantity": 500,
+      "unit": "g",
+      "cost_cents": 258
+    },
+    {
+      "offer_id": "bread_fresh",
+      "product": "bread",
+      "store": "Fresh",
+      "packages": 1,
+      "package_size": 500,
+      "quantity": 500,
+      "unit": "g",
+      "cost_cents": 109
+    },
+    {
+      "offer_id": "cola_fresh",
+      "product": "cola",
+      "store": "Fresh",
+      "packages": 1,
+      "package_size": 2000,
+      "quantity": 2000,
+      "unit": "ml",
+      "cost_cents": 299
+    }
+  ]
+}

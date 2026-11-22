@@ -1,0 +1,244 @@
+{
+  "method": "custom",
+  "plan": {
+    "rice_lidl": 2,
+    "coffee_lidl": 1,
+    "pasta_lidl": 2,
+    "buckwheat_lidl": 4,
+    "chicken_lidl": 2,
+    "tomatoes_lidl": 1,
+    "eggs_lidl": 1,
+    "cheese_lidl": 2,
+    "cola_kaufland": 1,
+    "milk_kaufland": 3,
+    "chocolate_kaufland": 2,
+    "bread_kaufland": 1
+  },
+  "steps": [
+    "Celý nákup v Fresh: produkty 54.31 € + doprava 0.00 € = 54.31 €.",
+    "Celý nákup v Kaufland: produkty 43.67 € + doprava 2.00 € = 45.67 €.",
+    "Celý nákup v Lidl: produkty 42.00 € + doprava 2.00 € = 44.00 €.",
+    "Celý nákup v Tesco: produkty 48.33 € + doprava 4.00 € = 52.33 €.",
+    "Začínam celým nákupom v Lidl: najlacnejší prípustný jednomiestny plán.",
+    "Presúvam nákup do Kaufland (cola: 1.05 €, milk: 0.60 €, chocolate: 0.08 €, bread: 0.06 €). Úspora produktov 1.79 € − zmena dopravy 0.00 € = čistá úspora 1.79 €.",
+    "Žiadny skúšaný presun kladných produktových úspor do jedného obchodu už neznižuje celkovú cenu."
+  ],
+  "feasible": true,
+  "errors": [],
+  "score_cents": 4221,
+  "products_cents": 4021,
+  "travel_cents": 200,
+  "total_cents": 4221,
+  "visited_stores": [
+    "Kaufland",
+    "Lidl"
+  ],
+  "coverage": [
+    {
+      "product": "rice",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "milk",
+      "needed": 3000,
+      "bought": 3000,
+      "surplus": 0,
+      "unit": "ml"
+    },
+    {
+      "product": "coffee",
+      "needed": 250,
+      "bought": 250,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "pasta",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "buckwheat",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "chicken",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "tomatoes",
+      "needed": 500,
+      "bought": 500,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "eggs",
+      "needed": 30,
+      "bought": 30,
+      "surplus": 0,
+      "unit": "ks"
+    },
+    {
+      "product": "chocolate",
+      "needed": 200,
+      "bought": 200,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "cheese",
+      "needed": 300,
+      "bought": 300,
+      "surplus": 0,
+      "unit": "g"
+    },
+    {
+      "product": "bread",
+      "needed": 500,
+      "bought": 600,
+      "surplus": 100,
+      "unit": "g"
+    },
+    {
+      "product": "cola",
+      "needed": 2000,
+      "bought": 2000,
+      "surplus": 0,
+      "unit": "ml"
+    }
+  ],
+  "purchases": [
+    {
+      "offer_id": "rice_lidl",
+      "product": "rice",
+      "store": "Lidl",
+      "packages": 2,
+      "package_size": 1000,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 278
+    },
+    {
+      "offer_id": "coffee_lidl",
+      "product": "coffee",
+      "store": "Lidl",
+      "packages": 1,
+      "package_size": 250,
+      "quantity": 250,
+      "unit": "g",
+      "cost_cents": 499
+    },
+    {
+      "offer_id": "pasta_lidl",
+      "product": "pasta",
+      "store": "Lidl",
+      "packages": 2,
+      "package_size": 1000,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 258
+    },
+    {
+      "offer_id": "buckwheat_lidl",
+      "product": "buckwheat",
+      "store": "Lidl",
+      "packages": 4,
+      "package_size": 500,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 520
+    },
+    {
+      "offer_id": "chicken_lidl",
+      "product": "chicken",
+      "store": "Lidl",
+      "packages": 2,
+      "package_size": 1000,
+      "quantity": 2000,
+      "unit": "g",
+      "cost_cents": 998
+    },
+    {
+      "offer_id": "tomatoes_lidl",
+      "product": "tomatoes",
+      "store": "Lidl",
+      "packages": 1,
+      "package_size": 500,
+      "quantity": 500,
+      "unit": "g",
+      "cost_cents": 120
+    },
+    {
+      "offer_id": "eggs_lidl",
+      "product": "eggs",
+      "store": "Lidl",
+      "packages": 1,
+      "package_size": 30,
+      "quantity": 30,
+      "unit": "ks",
+      "cost_cents": 449
+    },
+    {
+      "offer_id": "cheese_lidl",
+      "product": "cheese",
+      "store": "Lidl",
+      "packages": 2,
+      "package_size": 150,
+      "quantity": 300,
+      "unit": "g",
+      "cost_cents": 198
+    },
+    {
+      "offer_id": "cola_kaufland",
+      "product": "cola",
+      "store": "Kaufland",
+      "packages": 1,
+      "package_size": 2000,
+      "quantity": 2000,
+      "unit": "ml",
+      "cost_cents": 265
+    },
+    {
+      "offer_id": "milk_kaufland",
+      "product": "milk",
+      "store": "Kaufland",
+      "packages": 3,
+      "package_size": 1000,
+      "quantity": 3000,
+      "unit": "ml",
+      "cost_cents": 147
+    },
+    {
+      "offer_id": "chocolate_kaufland",
+      "product": "chocolate",
+      "store": "Kaufland",
+      "packages": 2,
+      "package_size": 100,
+      "quantity": 200,
+      "unit": "g",
+      "cost_cents": 190
+    },
+    {
+      "offer_id": "bread_kaufland",
+      "product": "bread",
+      "store": "Kaufland",
+      "packages": 1,
+      "package_size": 600,
+      "quantity": 600,
+      "unit": "g",
+      "cost_cents": 99
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+store_id,proximity_rank,travel_zone,visit_cost_cents
+Fresh,1,fresh,0
+Lidl,2,lidl_kaufland,200
+Kaufland,2,lidl_kaufland,200
+Tesco,3,tesco,400
