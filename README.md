@@ -1,10 +1,10 @@
 # MPO 5C
 
-Python 3.10+, bez inštalácie ďalších knižníc. Rozbaľte archív a otvorte priečinok `mpo_simple` v PyCharme.
+Python 3.11+, bez inštalácie ďalších knižníc. Rozbaľte archív a otvorte priečinok `mpo_simple` v PyCharme.
 
 ## Spustenie
 
-**Spustite `parser.py`** — vykoná obe metódy, vysvetlí rozhodnutia v konzole a zobrazí porovnanie:
+**Spustite `parser.py`** — vykoná všetky tri metódy, vysvetlí rozhodnutia v konzole a zobrazí porovnanie:
 
 ```bash
 python parser.py
@@ -16,21 +16,23 @@ python parser.py
 python test.py
 ```
 
-Ak potrebujete iba jeden algoritmus, spustite `main_greedy.py` alebo `main_custom.py`. Na Linuxe/macOS sa príkaz môže volať `python3`, vo Windows je dostupný aj `py`.
+Samostatne možno spustiť `main_greedy.py`, `main_custom.py` alebo `main_exact.py`. Na Linuxe/macOS sa príkaz môže volať `python3`, vo Windows je dostupný aj `py`.
 
 ## Čo obsahuje priečinok
 
 | Súbor | Účel |
 |---|---|
 | `main_greedy.py` | Najbližší obchod → nákup všetkého chýbajúceho |
-| `main_custom.py` | Zlepšenie plánu z každého počiatočného obchodu → výber najlepšieho výsledku |
+| `main_custom.py` | Lokálne zlepšovanie od najlacnejšieho úplného nákupu v jednom obchode |
+| `main_exact.py` | Presný výpočet pre všetky kombinácie dopravných zón |
 | `parser.py` | Čítanie CSV, spoločné pravidlá hodnotenia, zrozumiteľný výpis a porovnanie |
-| `test.py` | 12 automatických kontrol; výsledky neukladá na disk |
+| `test.py` | 13 automatických kontrol; výsledky neukladá na disk |
 | `products.csv` | 48 ponúk: produkt, obchod, balenie, cena, zásoba a zľava |
 | `shopping_list.csv` | 12 požadovaných produktov a ich množstvá |
 | `stores.csv` | Modelové poradie blízkosti obchodov a náklady na ich návštevu |
 | `result_greedy.json` | Posledný výsledok greedy |
 | `result_custom.json` | Posledný výsledok custom |
+| `result_exact.json` | Výsledok exact vytvorený pri spustení |
 
 ## Ako nakupuje greedy
 
@@ -41,11 +43,11 @@ Ceny produktov neporovnáva. V našich dátach má Fresh všetko potrebné, pret
 ## Ako nakupuje custom
 
 1. Vypočíta cenu celého požadovaného nákupu v každom obchode **so zohľadnením celých balení a dopravy**. Porovnáva sa celková suma, nie priemerná cena produktov.
-2. Každý obchod, ktorý sám pokryje celý zoznam, použije ako samostatný počiatočný plán. **Zlepšuje každý plán nezávisle**, nielen plán z najlacnejšieho počiatočného obchodu. Ak žiadny obchod nepokryje zoznam, použije počiatočný plán greedy.
+2. Začne najlacnejším plánom z obchodov, ktoré samy pokryjú celý zoznam. Ak žiadny obchod nepokryje zoznam, použije počiatočný plán greedy.
 3. Pre každý cieľový obchod hľadá kategórie, ktorých nákup je v ňom lacnejší než v aktuálnom pláne. Počíta cenu celého potrebného množstva; presúva celú kategóriu, nie jednotlivé ľubovoľné balenie. Kontroluje zásoby.
 4. Kladné úspory pre cieľový obchod sčíta. Rozdiely zoradí od najväčšieho po najmenší na vysvetlenie rozhodnutia.
 5. Vytvorí skúšobný plán, opäť ho overí a prepočíta dopravu. Vzorec: **čistá úspora = pôvodná celková cena − nová celková cena**. Zohľadní pridanie aj zrušenie návštev.
-6. Zo všetkých posúdených obchodov vyberie presun s najväčšou kladnou čistou úsporou. Opakuje vyhľadávanie do zastavenia. Nakoniec porovná výsledky všetkých počiatočných plánov a vyberie najlacnejší prípustný výsledok.
+6. Zo všetkých posúdených obchodov vyberie presun s najväčšou kladnou čistou úsporou. Opakuje vyhľadávanie, kým žiadny skúšaný presun nezníži celkovú cenu.
 
 Ak na káve ušetríme 2 € a na dvoch baleniach mlieka ďalšie 1 €, celková úspora je 3 €. Pri dodatočných nákladoch na cestu 2 € zostáva výhoda 1 €. Jednotlivé nákupy by cestu nemuseli zaplatiť, preto sa ich úspory sčítajú. Práve tento prípad overuje `test.py`.
 
@@ -58,6 +60,12 @@ Kaufland,2,kaufland,200
 
 Návšteva oboch potom stojí 4 €. Druhý stĺpec určuje iba poradie blízkosti.
 
+## Ako nakupuje exact
+
+Metóda prejde všetky neprázdne kombinácie dopravných zón. Pre každú kombináciu nájde najlacnejší nákup potrebného množstva každej kategórie pomocou dynamického programovania. Môže kombinovať balenia z viacerých obchodov, zohľadňuje zásoby a akcie. Hodnotiaca funkcia pripočíta cenu skutočne využitých zón. Najlacnejší úplný plán je globálnym minimom v zadanom modeli.
+
+Pri troch zónach metóda vyhodnotí sedem kombinácií. Počet kombinácií rastie exponenciálne s počtom zón.
+
 ## Skutočné porovnanie
 
 Výsledky pri spoločnej dopravnej zóne Lidl/Kaufland:
@@ -66,12 +74,13 @@ Výsledky pri spoločnej dopravnej zóne Lidl/Kaufland:
 |---|---:|---:|---:|
 | Greedy | 54,31 € | 0,00 € | **54,31 €** |
 | Custom | 40,21 € | 2,00 € | **42,21 €** |
+| Exact | 40,21 € | 2,00 € | **42,21 €** |
 
-Oba plány pokrývajú zoznam. Rozdiel je **12,10 €**.
+Všetky tri plány pokrývajú zoznam. Custom aj exact ušetria oproti greedy **12,10 €**.
 
-Custom zlepší každý počiatočný nákup samostatne. Zo štartov Fresh, Kaufland a Lidl dosiahne 42,21 €, zo štartu Tesco 46,21 €. Napríklad počiatočný plán Lidl za 44,00 € zlepší presunom coly, mlieka, čokolády a chleba do Kauflandu. Úspora na produktoch je 1,79 €, dodatočná doprava 0 € a výsledok 42,21 €. Dôvody a nákupy každého štartu sa zobrazujú pri spustení. Pri samostatnom účtovaní Lidla a Kauflandu bol overený výsledok custom 43,29 €.
+Custom začne nákupom v Lidli za 44,00 € a presunie colu, mlieko, čokoládu a chlieb do Kauflandu. Úspora na produktoch je 1,79 €, dodatočná doprava 0 € a výsledok 42,21 €.
 
-Ide o žravé lokálne zlepšovanie podľa čistej úspory s viacerými počiatočnými plánmi. Nezaručuje globálne minimum: napríklad viacero presunov môže byť výhodných iba spoločne. Metóda posudzuje presun do jedného obchodu za krok, preto môže takýto variant prehliadnuť. Nepresúva ani kategórie so zdražením produktov, hoci úplné zrušenie návštevy pôvodného obchodu by mohlo ušetriť dopravu. Počet balení volí minimálny na pokrytie potreby; dodatočné balenia výhradne kvôli zľave nepreberá. Porovnanie s najbližším Freshom ukazuje výsledok na jednej tabuľke, nie prevahu na všetkých možných dátach.
+Custom v jednom kroku posudzuje presun do jedného obchodu a vyberá len kategórie s lacnejšími produktmi. V samostatnom príklade v `test_custom_can_stop_before_global_optimum` skončí custom na 20,00 €, kým exact dosiahne 19,00 € spojením dvoch presunov do spoločnej zóny.
 
 ## Dáta a pravidlá
 
